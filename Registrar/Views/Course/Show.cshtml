@@ -1,0 +1,32 @@
+@using Registrar.Models;
+@using System.Collections.Generic;
+
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+    <h2>Course: @Model["course"].GetName()</h2>
+    <h2>Course Number: @Model["course"].GetNumber()</h2>
+    <p>Currently enrolled students:</p>
+    <ul>
+        @foreach(var student in @Model["courseStudents"])
+            {
+             <li> @student.GetName()</li>
+            }
+    </ul>
+    <h4>Register Students to this Course:</h4>
+    <form action = "/enrollStudent" method = "post">
+        <input type = "text" name="courseNumber" value =@Model["course"].GetNumber() hidden>
+        <label for = "studentRegistration">Choose students</label>
+        <select name = "studentRegistration" type = "text">
+            @foreach(var student in @Model["allStudents"])
+            {
+                <option value="@student.GetId()"> @student.GetName() </option>
+            }
+        </select>
+        <button type = "submit"> Add Student </button>
+    </form>
+    <a href = "/students">View Students</a> 
+    <a href="/"> Back to Main</a>
+</div>

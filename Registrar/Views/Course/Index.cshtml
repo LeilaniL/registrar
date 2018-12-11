@@ -1,0 +1,15 @@
+@using Registrar.Models;
+@using System.Collections.Generic;
+
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+    <h2>All Courses</h2>
+    <ul>
+    @foreach (var course in @Model)
+    {
+            <a href = "/courses/@course.GetNumber()"><li>@course.GetName()</li></a>
+    }
+    </ul>
