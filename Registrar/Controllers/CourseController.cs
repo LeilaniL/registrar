@@ -44,12 +44,18 @@ namespace Registrar.Controllers
         [HttpPost("/enrollStudent")]
         public ActionResult AddStudent(string courseNumber, int studentRegistration)
         {
+            Dictionary<string, object> model = new Dictionary<string, object>();
             Console.WriteLine("Update was called");
             Course selectedCourse = Course.Find(courseNumber);
             Student student = Student.Find(studentRegistration);
             Console.WriteLine(student.GetName());
             selectedCourse.AddStudent(student);
-            return View("Show", student);
+            List<Student> courseStudents = selectedCourse.GetStudents();
+            List<Student> allStudents = Student.GetAll();
+            model.Add("courseStudents", courseStudents);
+            model.Add("allStudents", allStudents);
+            model.Add("course", selectedCourse);
+            return View("Show", model);
         }
 
     }

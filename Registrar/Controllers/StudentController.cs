@@ -27,5 +27,36 @@ namespace Registrar.Controllers
             return View("Index", allStudents);
         }
 
+        [HttpGet("/students/{studentId}")]
+        public ActionResult Show(int studentId)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            Student selectedStudent = Student.Find(studentId);
+            List<Course> studentCourses = selectedStudent.GetCourses();
+            List<Course> allCourses = Course.GetAllCourses();
+            model.Add("studentCourses", studentCourses);
+            model.Add("allCourses", allCourses);
+            model.Add("student", selectedStudent);
+
+            return View("Show", model);
+        }
+        [HttpPost("/enrollCourse")]
+        public ActionResult AddCourse(int studentId, string courseNumber)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+
+            Student selectedStudent = Student.Find(studentId);
+            Course course = Course.Find(courseNumber);
+
+            selectedStudent.AddCourse(course);
+            List<Course> studentCourses = selectedStudent.GetCourses();
+            List<Course> allCourses = Course.GetAllCourses();
+            model.Add("studentCourses", studentCourses);
+            model.Add("allCourses", allCourses);
+            model.Add("student", selectedStudent);
+            return View("Show", model);
+        }
+
+
     }
 }

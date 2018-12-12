@@ -10,7 +10,7 @@
     <ul>
     @foreach (var student in @Model)
     {
-            <li>@student.GetName()</li>
+            <a href="/students/@student.GetId()"><li>@student.GetName()</li></a>
     }
     </ul>
 
